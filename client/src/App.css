@@ -36,3 +36,20 @@
     transform: rotate(360deg);
   }
 }
+
+/* New styles for custom card */
+.custom-card {
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: #f8f9fa;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+}
+
+.custom-card .card-title {
+  color: #007bff;
+}
+
+.custom-card .card-text {
+  color: #6c757d;
+}
