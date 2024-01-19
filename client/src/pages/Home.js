@@ -8,7 +8,7 @@ const CLIENT_ID = "af8678c5b22244a99d40b72f02519018";
 const CLIENT_SECRET = "825f240bb7d9401fac1225ca7537b347";
 
 
-function Home() {
+function Home(props) {
   const [searchInput, setSearchInput] = useState("");
   const [accessToken, setAccessToken] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -60,7 +60,12 @@ function Home() {
   }
 
   function handleSubmission(selectedTrack) {
-    setSubmittedSongs(prevSongs => [...prevSongs, selectedTrack]);
+    // setSubmittedSongs(prevSongs => [...prevSongs, selectedTrack]);
+    setSubmittedSongs(prevSongs => {
+        const newSongs = [...prevSongs, selectedTrack];
+        console.log('Updated submittedSongs:', newSongs); // Add this line to log the updated array
+        return newSongs;
+      });
     setSelectedTrack(null);
     setShowSubmittedSongs(true); // Show the submitted songs when a song is submitted
     navigate('/submitted-songs');
@@ -133,6 +138,7 @@ function Home() {
           ))}
         </Row>
       </Container>
+      {/* {showSubmittedSongs && <SubmittedSongs submittedSongs={submittedSongs} />} */}
     </div>
   );
 }

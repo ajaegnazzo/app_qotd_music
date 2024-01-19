@@ -1,10 +1,9 @@
-// SubmittedSongs.js
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
 function SubmittedSongs({ submittedSongs }) {
-  // Check if submittedSongs is not defined or not an array
-  if (!submittedSongs || !Array.isArray(submittedSongs)) {
+  // Check if submittedSongs is not defined or is an empty array
+  if (!submittedSongs || submittedSongs.length === 0) {
     return <div>No submitted songs yet.</div>;
   }
 
