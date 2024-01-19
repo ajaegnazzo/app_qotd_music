@@ -1,7 +1,13 @@
+// SubmittedSongs.js
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
 function SubmittedSongs({ submittedSongs }) {
+  // Check if submittedSongs is not defined or not an array
+  if (!submittedSongs || !Array.isArray(submittedSongs)) {
+    return <div>No submitted songs yet.</div>;
+  }
+
   return (
     <div>
       <h2>Submitted Songs</h2>
@@ -9,7 +15,7 @@ function SubmittedSongs({ submittedSongs }) {
         {submittedSongs.map((track, index) => (
           <div key={index} className="custom-card col-lg-2 col-md-2 col-sm-2 col-2">
             <Card>
-            {track.imageUrl && <Card.Img src={track.imageUrl} />}
+              {track.imageUrl && <Card.Img src={track.imageUrl} />}
               <Card.Body>
                 <Card.Title>{track.name}</Card.Title>
                 <Card.Text>{track.artists}</Card.Text>

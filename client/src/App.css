@@ -53,3 +53,16 @@
 .custom-card .card-text {
   color: #6c757d;
 }
+
+h1 {
+  text-decoration: underline;
+}
+
+.text-blurb {
+  margin-bottom: 200px;
+  margin-top: 50px;
+}
+
+.text-blurb h1 {
+  margin-bottom: 100px;
+}
