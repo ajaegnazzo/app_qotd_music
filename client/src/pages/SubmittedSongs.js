@@ -1,29 +1,25 @@
+// SubmittedSongs.js
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 
-function SubmittedSongs({ submittedSongs }) {
-  // Check if submittedSongs is not defined or is an empty array
-  if (!submittedSongs || submittedSongs.length === 0) {
-    return <div>No submitted songs yet.</div>;
-  }
+function SubmittedSongs() {
+  // Access the location state
+  const location = useLocation();
+  const { state } = location;
 
+  // Check if state.submittedSongs exists
+  const submittedSongs = state && state.submittedSongs ? state.submittedSongs : [];
+
+  // Render the submitted songs
   return (
-    <div>
-      <h2>Submitted Songs</h2>
-      <div className="row row-cols-5">
-        {submittedSongs.map((track, index) => (
-          <div key={index} className="custom-card col-lg-2 col-md-2 col-sm-2 col-2">
-            <Card>
-              {track.imageUrl && <Card.Img src={track.imageUrl} />}
-              <Card.Body>
-                <Card.Title>{track.name}</Card.Title>
-                <Card.Text>{track.artists}</Card.Text>
-              </Card.Body>
-            </Card>
-          </div>
-        ))}
+      <div>
+          <h2>Submitted Songs</h2>
+          <ul>
+              {submittedSongs.map((song, index) => (
+                  <li key={index}>{`${song.name} - ${song.artists}`}</li>
+              ))}
+          </ul>
       </div>
-    </div>
   );
 }
 

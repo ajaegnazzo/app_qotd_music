@@ -1,27 +1,19 @@
 // App.js
-import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import SubmittedSongs from './pages/SubmittedSongs';
+import './App.css';
 
-export default function App() {
-  const [submittedSongs, setSubmittedSongs] = useState([]);
-
+const App = () => {
   return (
-    <div className="App">
-      <BrowserRouter>
+    <Router>
         <Routes>
-          <Route
-            path="/home"
-            element={<Home submittedSongs={submittedSongs} setSubmittedSongs={setSubmittedSongs} />}
-          />
-          <Route
-            path="/submitted-songs"
-            element={<SubmittedSongs submittedSongs={submittedSongs} />}
-          />
-        </Routes>
-      </BrowserRouter>
-    </div>
+          <Route path="/home" element={<Home />} />
+          <Route path="/submitted-songs" element={<SubmittedSongs />} />
+          <Route path="/" element={<Navigate to="/home" />} /></Routes>
+    </Router>
   );
-}
+};
+
+export default App;
