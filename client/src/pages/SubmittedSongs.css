@@ -1,0 +1,10 @@
+/* SubmittedSongs.css */
+.title {
+   font-size: 40px; 
+   font-style: italic;
+   padding-left: 20px;
+}
+
+.list {
+    list-style: none;
+}

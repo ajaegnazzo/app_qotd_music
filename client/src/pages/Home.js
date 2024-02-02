@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Button, FormControl, Col } from 'react-bootstrap';
-import SubmittedSongs from './SubmittedSongs';
-import { Link, useNavigate } from 'react-router-dom';
-import { Navbar } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header'
 
 const CLIENT_ID = "af8678c5b22244a99d40b72f02519018";
 const CLIENT_SECRET = "825f240bb7d9401fac1225ca7537b347";
@@ -14,26 +13,29 @@ function Home(props) {
     const [searchInput, setSearchInput] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [selectedTrack, setSelectedTrack] = useState(null);
-    
 
-    // const [submittedSongs, setSubmittedSongs] = useState([]);
+
+    const [submittedSongs, setSubmittedSongs] = useState([]);
     const [showSubmittedSongs, setShowSubmittedSongs] = useState(false);
 
     const navigate = useNavigate();
-    
+
     const handleSubmission = () => {
         if (selectedTrack) {
-            // setSubmittedSongs((prevSongs) => [...prevSongs, selectedTrack]);
+            setSubmittedSongs((prevSongs) => [...prevSongs, selectedTrack]);
             setSelectedTrack(null);
             setShowSubmittedSongs(true)
+
+            navigate('/submitted-songs', { state: { submittedSongs: [...submittedSongs, selectedTrack] } });
         }
     };
 
     useEffect(() => {
         if (showSubmittedSongs) {
+            console.log('Submitted song:', submittedSongs)
             navigate('/submitted-songs');
         }
-    }, [showSubmittedSongs, navigate]);
+    }, [showSubmittedSongs, submittedSongs, navigate]);
 
     useEffect(() => {
         // API Access Token
@@ -92,32 +94,10 @@ function Home(props) {
         setSuggestions([]); // Clear suggestions when a suggestion is clicked
     }
 
-    useEffect(() => {
-        if (showSubmittedSongs) {
-            navigate('/submitted-songs');
-        }
-    }, [showSubmittedSongs, navigate]);
-
-
     return (
         <div className="App">
-            <Navbar bg="light" expand="lg">
-                <Container className='logo'>
-                    {/* Dulcet heading */}
-                    <Navbar.Brand href="#home">Dulcet</Navbar.Brand>
-                </Container>
-            </Navbar>
-            <Container>
-                <div className='togglePage'>
-                    <ul>
-                        <li>
-                            <Link to="/pages/home">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/pages/submitted-songs">Submitted Songs</Link>
-                        </li>
-                    </ul>
-                </div>
+            <Header />
+            <Container className='content'>
                 <div className='text-blurb'>
                     <p>Hi, we're Elias and Jae, and we're making tools to better our relationship with music.
                         This is our first idea, a facilitation of peer-to-peer music recommendation meant to combat
@@ -130,30 +110,51 @@ function Home(props) {
                 </div>
                 <div className='QOTD'>
                     <h2>What song are you looking for?</h2>
-                </div>
-                <Form.Group as={Col} controlId="formSearch">
-                    <FormControl
-                        placeholder="Search For Song"
-                        type="input"
-                        onChange={handleInputChange}
-                        value={searchInput}
-                    />
+                    <Form.Group as={Col} controlId="formSearch">
+                        <FormControl
+                            placeholder="Search For Song"
+                            type="input"
+                            onChange={handleInputChange}
+                            value={searchInput}
+                            style={{
+                                width: '90%', 
+                                marginTop: '5px',
+                                // Add any other styles you want to customize
+                            }}
+                        />
 
-                    {/* Display auto-suggestions */}
-                    {suggestions.length > 0 && (
-                        <div className="autosuggest">
-                            {suggestions.map((track, index) => (
-                                <div key={track.id} onClick={() => handleSuggestionClick(track)}>
-                                    {`${track.name} - ${track.artists}`}
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                    {/* Submit button */}
-                    <Button onClick={handleSubmission} variant="primary">
-                        Submit
-                    </Button>
-                </Form.Group>
+                        {/* Display auto-suggestions */}
+                        {suggestions.length > 0 && (
+                            <div className="autosuggest" style={{ maxHeight: '160px', overflowY: 'auto' }}>
+                                {suggestions.map((track, index) => (
+                                    <div 
+                                        key={track.id} 
+                                        onClick={() => handleSuggestionClick(track)}
+                                        style={{
+                                            cursor: 'pointer',
+                                            padding: '4px',
+                                            borderBottom: '1px solid #fff',
+                                            background: '#C8D5BB'
+                                        }}>
+                                        {`${track.name} - ${track.artists}`}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                        {/* Submit button */}
+                        <Button 
+                            onClick={handleSubmission} 
+                            variant="primary"
+                            style={{
+                                width: '10%',
+                                marginTop: '2px',
+                            }}
+                            >
+                            Submit
+                        </Button>
+                    </Form.Group>
+                </div>
+
             </Container>
         </div>
     );

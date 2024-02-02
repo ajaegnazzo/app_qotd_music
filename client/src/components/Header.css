@@ -1,0 +1,15 @@
+.logo {
+    font-size: 40px;
+    background-color: greenyellow;
+    font-style: italic;
+    padding-left: 10px;
+  }
+  
+  .logo h1 {
+    text-align: center;
+    font-size: 64px;
+    font-style: normal; 
+    font-weight: 600;
+    color: #C8D5BB;
+    margin-top: 50px;
+  }
